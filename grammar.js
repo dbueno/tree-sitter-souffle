@@ -122,6 +122,8 @@ module.exports = grammar({
       $.preprocessor_line,
       $.preprocessor_include,
       $.preprocessor_define,
+      $.preprocessor_if,
+      $.preprocessor_ifdef,
     ),
 
     preprocessor_line: $ => seq(
@@ -141,7 +143,17 @@ module.exports = grammar({
 
     preprocessor_define: $ => seq(
       '#define',
-      field('name', $.string),
+      field('name', $.ident),
+    ),
+
+    preprocessor_ifdef: $ => seq(
+      '#ifdef',
+      field('name', $.ident),
+    ),
+
+    preprocessor_if: $ => seq(
+      '#if',
+      field('name', $.ident),
     ),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
