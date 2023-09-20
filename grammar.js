@@ -118,10 +118,22 @@ module.exports = grammar({
     )),
 
     // https://gcc.gnu.org/onlinedocs/cpp/Preprocessor-Output.html
-    preprocessor: $ => seq(
+    preprocessor: $ => choice(
+      $.preprocessor_line,
+      $.preprocessor_include,
+    ),
+
+    preprocessor_line: $ => seq(
       '#line',
       field('line', NATURAL),
       field('file', $.string),
+      // TODO(lb)
+      // optional(field('flag', spaces(NATURAL))),
+    ),
+
+    preprocessor_include: $ => seq(
+      '#include',
+      field('file', choice($.string, $.include_string)),
       // TODO(lb)
       // optional(field('flag', spaces(NATURAL))),
     ),
@@ -406,6 +418,7 @@ module.exports = grammar({
     ipv4: $ => /[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}/,
 
     string: $ => /"([^"]|\\")*"/,
+    include_string: $ => /<([^<>])*>/,
     // NOTE: This is not anonymized because it is useful in tree-sitter queries.
     number: $ => choice(
       $.float,
