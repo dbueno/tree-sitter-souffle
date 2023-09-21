@@ -1650,6 +1650,11 @@
     }
   },
   {
+    "type": "preproc_endif",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "preproc_ifdef",
     "named": true,
     "fields": {
@@ -2480,6 +2485,10 @@
     "named": false
   },
   {
+    "type": "#endif",
+    "named": false
+  },
+  {
     "type": "#if",
     "named": false
   },
@@ -2908,10 +2917,6 @@
     "named": true
   },
   {
-    "type": "preproc_endif",
-    "named": true
-  },
-  {
     "type": "printsize",
     "named": false
   },
@@ -2981,11 +2986,11 @@
   },
   {
     "type": "unsigned",
-    "named": true
+    "named": false
   },
   {
     "type": "unsigned",
-    "named": false
+    "named": true
   },
   {
     "type": "{",
