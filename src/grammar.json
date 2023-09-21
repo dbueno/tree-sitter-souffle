@@ -8,14 +8,6 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "block_comment"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "line_comment"
-          },
-          {
-            "type": "SYMBOL",
             "name": "pragma"
           },
           {
@@ -56,12 +48,12 @@
           },
           {
             "type": "SYMBOL",
-            "name": "preproc"
+            "name": "preprocessor"
           }
         ]
       }
     },
-    "preproc": {
+    "preprocessor": {
       "type": "CHOICE",
       "members": [
         {
@@ -78,7 +70,15 @@
         },
         {
           "type": "SYMBOL",
+          "name": "preproc_if"
+        },
+        {
+          "type": "SYMBOL",
           "name": "preproc_ifdef"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preproc_else"
         },
         {
           "type": "SYMBOL",
@@ -137,6 +137,17 @@
         }
       ]
     },
+    "preproc_arg": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "\\S([^/\\n]|\\/[^*]|\\\\\\r?\\n)*"
+        }
+      }
+    },
     "preproc_def": {
       "type": "SEQ",
       "members": [
@@ -150,65 +161,6 @@
           "content": {
             "type": "SYMBOL",
             "name": "ident"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "value",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "preproc_arg"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\r?\\n"
-          }
-        }
-      ]
-    },
-    "preproc_arg": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC",
-        "value": -1,
-        "content": {
-          "type": "PATTERN",
-          "value": "\\S([^/\\n]|\\/[^*]|\\\\\\r?\\n)*"
-        }
-      }
-    },
-    "preproc_function_def": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "#define"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "ident"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "parameters",
-          "content": {
-            "type": "SYMBOL",
-            "name": "preproc_params"
           }
         },
         {
@@ -316,10 +268,6 @@
             {
               "type": "STRING",
               "value": "#ifndef"
-            },
-            {
-              "type": "STRING",
-              "value": "#if"
             }
           ]
         },
@@ -330,6 +278,28 @@
             "type": "SYMBOL",
             "name": "ident"
           }
+        }
+      ]
+    },
+    "preproc_if": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#if"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preproc_arg"
+        }
+      ]
+    },
+    "preproc_else": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#else"
         }
       ]
     },
@@ -609,14 +579,6 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "block_comment"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "line_comment"
-                },
-                {
-                  "type": "SYMBOL",
                   "name": "component_decl"
                 },
                 {
@@ -645,7 +607,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "preproc"
+                  "name": "preprocessor"
                 },
                 {
                   "type": "SEQ",
@@ -4062,7 +4024,15 @@
   "extras": [
     {
       "type": "PATTERN",
-      "value": "\\s"
+      "value": "\\s|\\\\\\r?\\n"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "block_comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "line_comment"
     }
   ],
   "conflicts": [],

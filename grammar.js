@@ -95,6 +95,12 @@ module.exports = grammar({
   //   $._natural,
   // ],
 
+  extras: $ => [
+    /\s|\\\r?\n/,
+    $.block_comment,
+    $.line_comment,
+  ],
+
   rules: {
     // program  ::= ( pragma | functor_decl | component_decl | component_init | directive | rule | fact | relation_decl | type_decl )*
     //
@@ -102,8 +108,6 @@ module.exports = grammar({
     // https://github.com/souffle-lang/souffle/blob/2.3/src/parser/parser.yy#L308
     //
     program: $ => repeat(choice(
-      $.block_comment,
-      $.line_comment,
       $.pragma,
       $.functor_decl,
       $.component_decl,
@@ -114,15 +118,17 @@ module.exports = grammar({
       $.relation_decl,
       $.type_decl,
       $.legacy_type_decl,
-      $.preproc,
+      $.preprocessor,
     )),
 
     // https://gcc.gnu.org/onlinedocs/cpp/preproc-Output.html
-    preproc: $ => choice(
+    preprocessor: $ => choice(
       $.preproc_line,
       $.preproc_include,
       $.preproc_def,
+      $.preproc_if,
       $.preproc_ifdef,
+      $.preproc_else,
       $.preproc_endif,
     ),
 
@@ -141,19 +147,11 @@ module.exports = grammar({
       // optional(field('flag', spaces(NATURAL))),
     ),
 
+    preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
+
     preproc_def: $ => seq(
       '#define',
       field('name', $.ident),
-      field('value', optional($.preproc_arg)),
-      token.immediate(/\r?\n/),
-    ),
-
-    preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
-
-    preproc_function_def: $ => seq(
-      '#define',
-      field('name', $.ident),
-      field('parameters', $.preproc_params),
       field('value', optional($.preproc_arg)),
       token.immediate(/\r?\n/),
     ),
@@ -163,9 +161,16 @@ module.exports = grammar({
     ),
 
     preproc_ifdef: $ => seq(
-      choice('#ifdef', '#ifndef', '#if'),
+      choice('#ifdef', '#ifndef'),
       field('name', $.ident),
     ),
+
+    preproc_if: $ => seq(
+      '#if',
+      $.preproc_arg
+    ),
+
+    preproc_else: $ => seq('#else'),
 
     preproc_endif: $ => seq('#endif'),
 
@@ -219,8 +224,6 @@ module.exports = grammar({
       optional(seq(':', commas1(field('super', $.component_type)))),
       '{',
       field('body', repeat(choice(
-        $.block_comment,
-        $.line_comment,
         $.component_decl,
         $.component_init,
         $.directive,
@@ -228,7 +231,7 @@ module.exports = grammar({
         $.relation_decl,
         $._rule,
         $.type_decl,
-        $.preproc,
+        $.preprocessor,
         seq('.override', $.ident),
       ))),
       '}',

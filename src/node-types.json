@@ -853,10 +853,6 @@
             "named": false
           },
           {
-            "type": "block_comment",
-            "named": true
-          },
-          {
             "type": "component_decl",
             "named": true
           },
@@ -877,15 +873,11 @@
             "named": true
           },
           {
-            "type": "line_comment",
-            "named": true
-          },
-          {
             "type": "monotonic_rule",
             "named": true
           },
           {
-            "type": "preproc",
+            "type": "preprocessor",
             "named": true
           },
           {
@@ -1593,37 +1585,6 @@
     }
   },
   {
-    "type": "preproc",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "preproc_def",
-          "named": true
-        },
-        {
-          "type": "preproc_endif",
-          "named": true
-        },
-        {
-          "type": "preproc_ifdef",
-          "named": true
-        },
-        {
-          "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "preproc_line",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "preproc_def",
     "named": true,
     "fields": {
@@ -1650,9 +1611,29 @@
     }
   },
   {
+    "type": "preproc_else",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "preproc_endif",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "preproc_if",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "preproc_arg",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "preproc_ifdef",
@@ -1707,15 +1688,39 @@
     }
   },
   {
-    "type": "preproc_params",
+    "type": "preprocessor",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
-          "type": "ident",
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_else",
+          "named": true
+        },
+        {
+          "type": "preproc_endif",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "preproc_line",
           "named": true
         }
       ]
@@ -1734,10 +1739,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "block_comment",
-          "named": true
-        },
         {
           "type": "component_decl",
           "named": true
@@ -1763,10 +1764,6 @@
           "named": true
         },
         {
-          "type": "line_comment",
-          "named": true
-        },
-        {
           "type": "monotonic_rule",
           "named": true
         },
@@ -1775,7 +1772,7 @@
           "named": true
         },
         {
-          "type": "preproc",
+          "type": "preprocessor",
           "named": true
         },
         {
@@ -2485,6 +2482,10 @@
     "named": false
   },
   {
+    "type": "#else",
+    "named": false
+  },
+  {
     "type": "#endif",
     "named": false
   },
@@ -2986,11 +2987,11 @@
   },
   {
     "type": "unsigned",
-    "named": false
+    "named": true
   },
   {
     "type": "unsigned",
-    "named": true
+    "named": false
   },
   {
     "type": "{",

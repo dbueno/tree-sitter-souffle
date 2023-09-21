@@ -74,13 +74,3 @@ Output multiple
   (directive
     relation: (qualified_name (ident))
     relation: (qualified_name (ident))))
-
-============================================================
-Qualified name with ".type" (TODO(#8))
-============================================================
-
-.output bar.type.foo
-
----
-
-(program (directive (qualified_name (ident))) (ERROR (UNEXPECTED 'o'))) 

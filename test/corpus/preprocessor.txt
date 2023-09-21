@@ -1,9 +1,143 @@
 ============================================================
-C pre-processor
+C pre-processor #line
 ============================================================
 
 #line 26 "foo.dl"
 
 ---
 
-(program (preprocessor (string)))
+    (program
+      (preprocessor
+        (preproc_line
+          (string))))
+
+============================================================
+C pre-processor #include std
+============================================================
+
+#include <foo.h>
+
+---
+
+    (program
+      (preprocessor
+        (preproc_include
+          (include_string))))
+
+============================================================
+C pre-processor #include str
+============================================================
+
+#include "foo.h"
+
+---
+
+    (program
+      (preprocessor
+        (preproc_include
+          (string))))
+
+============================================================
+C pre-processor #define subst
+============================================================
+
+#define FOO 3
+
+---
+
+    (program
+      (preprocessor
+        (preproc_def
+          (ident)
+          (preproc_arg))))
+
+============================================================
+C pre-processor #define func
+============================================================
+
+#define FOO(x, y, z) Foo(x), Foo(y), Foo(z)
+
+---
+
+    (program
+      (preprocessor
+        (preproc_def
+          (ident)
+          (preproc_arg))))
+
+============================================================
+C pre-processor #define func multiline
+============================================================
+
+#define FOO(x, y, z) \
+  Foo(x), \
+  Foo(y), \
+  Foo(z)
+
+---
+
+    (program
+      (preprocessor
+        (preproc_def
+          (ident)
+          (preproc_arg))))
+
+============================================================
+C pre-processor #ifdef
+============================================================
+
+#ifdef FOO
+
+---
+
+    (program
+      (preprocessor
+        (preproc_ifdef (ident))))
+
+============================================================
+C pre-processor #ifndef
+============================================================
+
+#ifndef FOO
+
+---
+
+    (program
+      (preprocessor
+        (preproc_ifdef (ident))))
+
+============================================================
+C pre-processor #else
+============================================================
+
+#else
+
+---
+
+    (program
+      (preprocessor
+        (preproc_else)))
+
+============================================================
+C pre-processor #endif
+============================================================
+
+#endif
+
+---
+
+    (program
+      (preprocessor
+        (preproc_endif)))
+
+============================================================
+C pre-processor #if
+============================================================
+
+#if FOO && (BAR < 3)
+
+---
+
+    (program
+      (preprocessor
+        (preproc_if (preproc_arg))))
