@@ -78,10 +78,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "preproc_if"
-        },
-        {
-          "type": "SYMBOL",
           "name": "preproc_ifdef"
         },
         {
@@ -320,6 +316,10 @@
             {
               "type": "STRING",
               "value": "#ifndef"
+            },
+            {
+              "type": "STRING",
+              "value": "#if"
             }
           ]
         },
@@ -336,23 +336,6 @@
     "preproc_endif": {
       "type": "STRING",
       "value": "#endif"
-    },
-    "preproc_if": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "#if"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "ident"
-          }
-        }
-      ]
     },
     "block_comment": {
       "type": "SEQ",

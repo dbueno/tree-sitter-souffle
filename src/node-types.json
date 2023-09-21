@@ -1609,10 +1609,6 @@
           "named": true
         },
         {
-          "type": "preproc_if",
-          "named": true
-        },
-        {
           "type": "preproc_ifdef",
           "named": true
         },
@@ -1647,22 +1643,6 @@
         "types": [
           {
             "type": "preproc_arg",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "preproc_if",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "ident",
             "named": true
           }
         ]
@@ -3001,11 +2981,11 @@
   },
   {
     "type": "unsigned",
-    "named": false
+    "named": true
   },
   {
     "type": "unsigned",
-    "named": true
+    "named": false
   },
   {
     "type": "{",
