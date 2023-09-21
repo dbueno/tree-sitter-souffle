@@ -124,6 +124,7 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_if,
       $.preproc_ifdef,
+      $.preproc_endif,
     ),
 
     preproc_line: $ => seq(
@@ -166,6 +167,8 @@ module.exports = grammar({
       '#ifdef',
       field('name', $.ident),
     ),
+
+    preproc_endif: $ => '#endif',
 
     preproc_if: $ => seq(
       '#if',
