@@ -164,7 +164,7 @@ module.exports = grammar({
     ),
 
     preproc_ifdef: $ => seq(
-      '#ifdef',
+      choice('#ifdef', '#ifndef'),
       field('name', $.ident),
     ),
 
@@ -267,8 +267,9 @@ module.exports = grammar({
       commas1(field('relation', $.qualified_name)),
       optional(parens(commas(seq(
         field('key', $.ident),
-        '=',
-        field('value', $._directive_value)
+        optional(seq(
+          '=',
+          field('value', $._directive_value)))
       ))))
     ),
 
@@ -392,7 +393,11 @@ module.exports = grammar({
     //
     //
     //
-    fact: $ => seq(field('atom', $.atom), '.'),
+    fact: $ => seq(
+      field('atom', $.atom),
+      '.',
+      field('plan', optional($.query_plan)),
+    ),
 
     // atom ::= qualified_name '(' ( argument ( ',' argument )* )? ')'
     //
