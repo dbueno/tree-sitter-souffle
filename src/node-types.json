@@ -885,7 +885,7 @@
             "named": true
           },
           {
-            "type": "preprocessor",
+            "type": "preproc",
             "named": true
           },
           {
@@ -1198,6 +1198,16 @@
         "types": [
           {
             "type": "atom",
+            "named": true
+          }
+        ]
+      },
+      "plan": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "query_plan",
             "named": true
           }
         ]
@@ -1583,7 +1593,120 @@
     }
   },
   {
-    "type": "preprocessor",
+    "type": "preproc",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_endif",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "preproc_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "preproc_def",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preproc_arg",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preproc_if",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preproc_ifdef",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ident",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preproc_include",
+    "named": true,
+    "fields": {
+      "file": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "include_string",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preproc_line",
     "named": true,
     "fields": {
       "file": {
@@ -1596,6 +1719,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "preproc_params",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "ident",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1652,7 +1790,7 @@
           "named": true
         },
         {
-          "type": "preprocessor",
+          "type": "preproc",
           "named": true
         },
         {
@@ -2358,6 +2496,26 @@
     "named": false
   },
   {
+    "type": "#define",
+    "named": false
+  },
+  {
+    "type": "#if",
+    "named": false
+  },
+  {
+    "type": "#ifdef",
+    "named": false
+  },
+  {
+    "type": "#ifndef",
+    "named": false
+  },
+  {
+    "type": "#include",
+    "named": false
+  },
+  {
     "type": "#line",
     "named": false
   },
@@ -2407,6 +2565,10 @@
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "...",
     "named": false
   },
   {
@@ -2674,6 +2836,10 @@
     "named": true
   },
   {
+    "type": "include_string",
+    "named": true
+  },
+  {
     "type": "inline",
     "named": false
   },
@@ -2758,6 +2924,14 @@
     "named": false
   },
   {
+    "type": "preproc_arg",
+    "named": true
+  },
+  {
+    "type": "preproc_endif",
+    "named": true
+  },
+  {
     "type": "printsize",
     "named": false
   },
@@ -2827,11 +3001,11 @@
   },
   {
     "type": "unsigned",
-    "named": true
+    "named": false
   },
   {
     "type": "unsigned",
-    "named": false
+    "named": true
   },
   {
     "type": "{",
