@@ -114,19 +114,19 @@ module.exports = grammar({
       $.relation_decl,
       $.type_decl,
       $.legacy_type_decl,
-      $.preprocessor,
+      $.preproc,
     )),
 
-    // https://gcc.gnu.org/onlinedocs/cpp/Preprocessor-Output.html
-    preprocessor: $ => choice(
-      $.preprocessor_line,
-      $.preprocessor_include,
-      $.preprocessor_define,
-      $.preprocessor_if,
-      $.preprocessor_ifdef,
+    // https://gcc.gnu.org/onlinedocs/cpp/preproc-Output.html
+    preproc: $ => choice(
+      $.preproc_line,
+      $.preproc_include,
+      $.preproc_def,
+      $.preproc_if,
+      $.preproc_ifdef,
     ),
 
-    preprocessor_line: $ => seq(
+    preproc_line: $ => seq(
       '#line',
       field('line', NATURAL),
       field('file', $.string),
@@ -134,24 +134,40 @@ module.exports = grammar({
       // optional(field('flag', spaces(NATURAL))),
     ),
 
-    preprocessor_include: $ => seq(
+    preproc_include: $ => seq(
       '#include',
       field('file', choice($.string, $.include_string)),
       // TODO(lb)
       // optional(field('flag', spaces(NATURAL))),
     ),
 
-    preprocessor_define: $ => seq(
+    preproc_def: $ => seq(
       '#define',
       field('name', $.ident),
+      field('value', optional($.preproc_arg)),
+      token.immediate(/\r?\n/),
     ),
 
-    preprocessor_ifdef: $ => seq(
+    preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
+
+    preproc_function_def: $ => seq(
+      '#define',
+      field('name', $.ident),
+      field('parameters', $.preproc_params),
+      field('value', optional($.preproc_arg)),
+      token.immediate(/\r?\n/),
+    ),
+
+    preproc_params: $ => seq(
+      token.immediate('('), commas(choice($.ident, '...')), ')',
+    ),
+
+    preproc_ifdef: $ => seq(
       '#ifdef',
       field('name', $.ident),
     ),
 
-    preprocessor_if: $ => seq(
+    preproc_if: $ => seq(
       '#if',
       field('name', $.ident),
     ),
@@ -215,7 +231,7 @@ module.exports = grammar({
         $.relation_decl,
         $._rule,
         $.type_decl,
-        $.preprocessor,
+        $.preproc,
         seq('.override', $.ident),
       ))),
       '}',
