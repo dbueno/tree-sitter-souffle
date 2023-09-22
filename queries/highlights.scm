@@ -61,6 +61,10 @@
 ">=" @keyword
 "<" @keyword
 ">" @keyword
+[".input" ".limitsize" ".output" ".printsize"] @keyword
+["brie" "btree" "btree_delete" "eqrel" "inline" "magic" "no_inline" "no_magic" "override" "overridable" "input" "output" "printsize"] @keyword
+
+["acos" "acosh" "asin" "asinh" "atan" "atanh" "cos" "cosh" "exp" "log" "sin" "sinh" "tan" "tanh" "autoinc" "cat" "max" "min" "ord" "strlen" "substr" "to_float" "to_number" "to_string" "to_unsigned" "mean" "sum" "count" "range"] @keyword
 
 
 ;(intrinsic_functor) @keyword
@@ -70,45 +74,56 @@
 (unary_op operator: "~" @keyword)
 (unary_op operator: "!" @keyword)
 
-"max" @keyword
-"min" @keyword
-"mean" @keyword
-"sum" @keyword
-"count" @keyword
+(preprocessor) @keyword
 
-; preprocessor
-
-"#include" @keyword
-"#define" @keyword
-"#if" @keyword
-"#ifdef" @keyword
-"#ifndef" @keyword
-"#else" @keyword
-"#endif" @keyword
-
-(string) @string
 (preproc_include (string)) @string.special
-(include_string) @string
 
 (preprocessor) @keyword
 
-(directive directive: [".input" ".limitsize" ".output" ".printsize"] @keyword)
+(pragma key: (string) @string)
+(pragma value: (string) @string)
+
+(functor_decl name: (ident) @function)
+
+(component_decl (":" (component_type)* @type))
+(component_type name: (ident) @function)
+(component_type param: (ident) @type)
+
 (directive key: (ident) @tag)
 
-(aggregator ":" @keyword)
+(monotonic_rule (atom relation: (qualified_name) @constructor))
+(monotonic_rule ":-" @keyword)
+
+(subsumptive_rule subsumes: (atom relation: (qualified_name) @underlined))
+(subsumptive_rule ":-" @keyword)
+
+(disjunction (";") @keyword)
+(conjunction (",") @keyword)
+
+(match "match" @keyword)
+(contains "contains" @keyword)
+
+(fact (atom relation: (qualified_name) @constructor))
+
+(adt_constructor constructor: (qualified_name) @constructor)
+
+(string) @string
+(include_string) @string
+(constant) @constant.builtin
+
+(as "as") @keyword
+
+(user_defined_functor ("@" (ident)) @constructor)
+
 
 (relation_decl (ident) @function)
 (relation_decl
   attribute: (attribute var: (ident) @variable.parameter))
 (relation_decl
   attribute: (attribute type: (qualified_name) @type))
-(relation_decl
-  qualifier:
-  ["brie" "btree" "btree_delete" "eqrel" "inline" "magic" "no_inline" "no_magic" "override" "overridable" "input" "output" "printsize"] @keyword)
-; (relation_decl attribute: (attribute var: (ident) @variable.parameter))
+
 (relation_decl choice: (choice_domain (ident) @variable.parameter) @keyword)
 
-;(atom relation: (qualified_name)) @constant
 (primitive_type) @type
 (type_synonym left: (ident) @type)
 (subtype left: (ident) @type)
@@ -116,24 +131,3 @@
 (type_record left: (ident) @type)
 (adt left: (ident) @type)
 
-(component_decl type: (component_type name: (ident) @function))
-(component_decl type: (component_type param: (ident) @type))
-
-; rules
-
-(fact (atom relation: (qualified_name) @constructor))
-
-(subsumptive_rule subsumes: (atom relation: (qualified_name) @underlined))
-(subsumptive_rule ":-" @keyword)
-
-; (subsumptive_rule
-;   subsumes: (atom relation: (qualified_name) @Identifier))
-(monotonic_rule (atom relation: (qualified_name) @constructor))
-(monotonic_rule ":-" @keyword)
-
-(disjunction (";") @keyword)
-(conjunction (",") @keyword)
-
-(match "match" @keyword)
-(contains "contains" @keyword)
-(comparison operator: ["=" "!=" "<=" ">=" "<" ">"] @keyword)
