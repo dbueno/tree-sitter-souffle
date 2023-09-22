@@ -1,5 +1,4 @@
-{
-  "name": "tree-sitter-souffle",
+{ "name": "tree-sitter-souffle",
   "version": "0.1.0",
   "description": "",
   "main": "bindings/node",
@@ -21,5 +20,17 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.7"
-  }
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.dl",
+      "file-types": [
+        "dl"
+      ],
+      "injection-regex": "^dl$",
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ]
 }

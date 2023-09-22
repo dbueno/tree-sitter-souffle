@@ -83,6 +83,14 @@
         {
           "type": "SYMBOL",
           "name": "preproc_endif"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preproc_pragma"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preproc_use"
         }
       ]
     },
@@ -309,6 +317,28 @@
         {
           "type": "STRING",
           "value": "#endif"
+        }
+      ]
+    },
+    "preproc_pragma": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#pragma"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preproc_arg"
+        }
+      ]
+    },
+    "preproc_use": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ident"
         }
       ]
     },
@@ -2042,6 +2072,10 @@
               {
                 "type": "SYMBOL",
                 "name": "intrinsic_functor"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "any_functor"
               }
             ]
           }
@@ -2224,6 +2258,23 @@
           {
             "type": "STRING",
             "value": "to_unsigned"
+          }
+        ]
+      }
+    },
+    "any_functor": {
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "ident"
+            }
           }
         ]
       }
