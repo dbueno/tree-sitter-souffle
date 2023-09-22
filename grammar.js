@@ -130,6 +130,8 @@ module.exports = grammar({
       $.preproc_ifdef,
       $.preproc_else,
       $.preproc_endif,
+      $.preproc_pragma,
+      $.preproc_use,
     ),
 
     preproc_line: $ => seq(
@@ -173,6 +175,13 @@ module.exports = grammar({
     preproc_else: $ => seq('#else'),
 
     preproc_endif: $ => seq('#endif'),
+
+    preproc_pragma: $ => seq(
+      '#pragma',
+      $.preproc_arg
+    ),
+
+    preproc_use: $ => seq($.ident),
 
     // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
     block_comment: $ => seq(
@@ -490,7 +499,7 @@ module.exports = grammar({
     ),
 
     functor_call: $ => seq(
-      field('functor', choice($.user_defined_functor, $.intrinsic_functor)),
+      field('functor', choice($.user_defined_functor, $.intrinsic_functor, $.any_functor)),
       parens(commas(field('argument', $._argument))),
     ),
 
@@ -531,6 +540,9 @@ module.exports = grammar({
       'to_string',
       'to_unsigned',
     )),
+
+    // lower precedence than other functor options
+    any_functor: $ => prec(-1, seq(field('name', $.ident))),
 
     // aggregator  ::= (( ( 'max' | 'mean' | 'min' | 'sum' ) argument | 'count' ) ':' ( '{' disjunction '}' | atom )) |
     //   'range' '(' argument ',' argument (',' argument)? ')'
