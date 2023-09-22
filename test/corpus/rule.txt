@@ -215,3 +215,59 @@ log(x) :- exp(x).
 (program (fact (atom (qualified_name (ident)) (variable (ident))) (ERROR (functor_call (intrinsic_functor) (variable (ident)))))) 
 
 
+============================================================
+Count aggregator
+============================================================
+
+rule(n) :- n = count : { rule(_, _) }.
+
+---
+
+(program
+      (monotonic_rule
+        (atom
+          (qualified_name
+            (ident))
+          (variable
+            (ident)))
+        (disjunction
+          (conjunction
+            (comparison
+              (variable
+                (ident))
+              (aggregator
+                (disjunction
+                  (conjunction
+                    (atom
+                      (qualified_name
+                        (ident))
+                      (anonymous)
+                      (anonymous))))))))))
+
+============================================================
+Custom functor constraint
+============================================================
+
+rule(n) :- n = my_custom_functor(x, y).
+
+---
+
+    (program
+      (monotonic_rule
+        (atom
+          (qualified_name
+            (ident))
+          (variable
+            (ident)))
+        (disjunction
+          (conjunction
+            (comparison
+              (variable
+                (ident))
+              (functor_call
+                (any_functor
+                  (ident))
+                (variable
+                  (ident))
+                (variable
+                  (ident))))))))

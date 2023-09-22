@@ -141,3 +141,15 @@ C pre-processor #if
     (program
       (preprocessor
         (preproc_if (preproc_arg))))
+
+============================================================
+C pre-processor #pragma
+============================================================
+
+#pragma once
+
+---
+
+    (program
+      (preprocessor
+        (preproc_pragma (preproc_arg))))
